@@ -12,7 +12,7 @@ Installation
 
 .. code:: sh
 
-    pip install -r testinfra/requirements.txt
+    pip install -r securedrop/dev-requirements.txt
 
 Running the tests
 -----------------

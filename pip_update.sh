@@ -33,7 +33,7 @@ pip install pip-tools
 
 # Compile new requirements (.txt) files from our top-level dependency (.in)
 # files. See http://nvie.com/posts/better-package-management/
-for r in "securedrop" "test"; do
+for r in "securedrop" "test" "dev"; do
   # Maybe pip-tools will get its act together and standardize their cert-pinning
   # syntax and this line will break. One can only hope.
   pip-compile -U -o "${r}-requirements.txt" "${r}-requirements.in"

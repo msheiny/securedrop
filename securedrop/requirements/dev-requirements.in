@@ -1,0 +1,5 @@
+ansible==1.8.4
+Jinja2
+pytest
+pytest-xdist
+testinfra
