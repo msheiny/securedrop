@@ -2,4 +2,7 @@ ansible==1.8.4
 Jinja2
 pytest
 pytest-xdist
+sphinx
+sphinx-autobuild
+sphinx_rtd_theme
 testinfra
