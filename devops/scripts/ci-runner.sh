@@ -1,11 +1,7 @@
 #!/bin/bash
-#
-#
-#
+
 export RETRY_FILES_ENABLED="False"
-export ANSIBLE_INVENTORY="localhost"
+export ANSIBLE_INVENTORY="./devops/inventory/$CI_SD_ENV"
+export ANSIBLE_SSH_ARGS="-F $HOME/.ssh/sshconfig-securedrop-ci-$TRAVIS_BUILD_NUMBER -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
-./devops/playbooks/aws-ci-startup.yml --diff
-
-#testinfra --hosts=`cat jenkins-aws-instances` --junit-xml=junit.xml --sudo \
-#    --ssh-config=/tmp/sshconfig-`echo $JOB_BASE_NAME | sed 's/\s//g'`$BUILD_NUMBER
+ansible-playbook install_files/ansible-base/build-deb-pkgs.yml --skip-tags=local_build

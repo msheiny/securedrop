@@ -1,0 +1,15 @@
+[app-staging]
+application
+
+[mon-staging]
+monitor
+
+[staging]
+application
+monitor
+
+[securedrop:children]
+staging
+
+[build]
+deb-builder
