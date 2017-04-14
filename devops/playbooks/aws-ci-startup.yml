@@ -110,5 +110,6 @@
       curl -s http://169.254.169.254/2011-01-01/meta-data/public-keys/0/openssh-key > /home/{{ ansible_user_id }}/.ssh/authorized_keys
       chown {{ ansible_user_id }} -R /home/{{ ansible_user_id }}/.ssh
       chmod 700 -R /home/{{ ansible_user_id }}/.ssh
+      echo "{{ ansible_user_id }} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
   vars_files:
     - "../vars/{{ ci_environment }}.yml"
