@@ -89,7 +89,7 @@
 
       - name: Add AWS host(s) to temp ssh config
         template:
-          dest: "{{ ansible_user_dir }}/sshconfig-{{ job_id }}"
+          dest: "{{ ansible_user_dir }}/.ssh/sshconfig-{{ job_id }}"
           src: ../templates/ssh_config
 
       become_user: "{{ ansible_user_id }}"

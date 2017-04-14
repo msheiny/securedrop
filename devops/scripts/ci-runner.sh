@@ -2,7 +2,7 @@
 #
 #
 #
-
+export RETRY_FILES_ENABLED="False"
 export ANSIBLE_INVENTORY="localhost"
 
 ./devops/playbooks/aws-ci-startup.yml --diff
