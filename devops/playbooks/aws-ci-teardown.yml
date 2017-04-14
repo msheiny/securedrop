@@ -38,11 +38,10 @@
           state: absent
           region: "{{ aws_ec2_ci_region }}"
         register: ec2_group_result
+        ignore_errors: true
         until: "{{ ec2_group_result.changed | default(false) }}"
-        retries: 10
+        retries: 6
         delay: 20
-
-      - debug: var=ec2_group_result
 
       - name: destroy local tmp keys
         file:
@@ -55,6 +54,7 @@
       - name: destroy local sshconfig
         file:
           path: "{{ ansible_user_dir }}/.ssh/sshconfig-{{ job_id }}"
+          state: absent
 
       become_user: "{{ ansible_user_id }}"
       delegate_to: localhost
