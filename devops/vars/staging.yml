@@ -1,0 +1,4 @@
+---
+aws_instance_tags:
+  - server_type: monitor
+  - server_type: application
