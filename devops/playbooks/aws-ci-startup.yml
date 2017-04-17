@@ -36,6 +36,13 @@
           virtualization_type: hvm
         register: ami_search_result
 
+      - name: Find VPC subnet
+        ec2_vpc_subnet_facts:
+          region: "{{ aws_ec2_ci_region }}"
+          filters:
+            vpc-id: "{{ aws_ec2_vpc_id }}"
+        register: vpc_subnet_result
+
       - name: Create custom security_group
         ec2_group:
           name: "{{ job_id }}"
@@ -47,14 +54,11 @@
               from_port: 22
               to_port: 22
               cidr_ip: "{{ ci_box_ip  }}/32"
+            - proto: tcp
+              from_port: 1515
+              to_port: 1515
+              cidr_ip: "{{ vpc_subnet_result.subnets[0].cidr_block }}"
         register: group_create_result
-
-      - name: Find VPC subnet
-        ec2_vpc_subnet_facts:
-          region: "{{ aws_ec2_ci_region }}"
-          filters:
-            vpc-id: "{{ aws_ec2_vpc_id }}"
-        register: vpc_subnet_result
 
       - name: Fire up instance(s)
         ec2:
