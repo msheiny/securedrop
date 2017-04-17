@@ -1,12 +1,18 @@
+[securedrop_monitor_server]
+mon-staging
+
+[securedrop_application_server]
+app-staging
+
 [app-staging]
-application
+app-staging
 
 [mon-staging]
-monitor
+mon-staging
 
 [staging]
-application
-monitor
+app-staging
+mon-staging
 
 [securedrop:children]
 staging

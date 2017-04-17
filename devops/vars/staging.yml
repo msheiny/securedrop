@@ -1,5 +1,5 @@
 ---
 aws_instance_tags:
-  - server_type: monitor
-  - server_type: application
+  - server_type: mon-staging
+  - server_type: app-staging
   - server_type: deb-builder
