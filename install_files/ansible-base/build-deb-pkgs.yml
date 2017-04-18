@@ -93,5 +93,4 @@
         flat: yes
       when: amazon_builder
       with_items: "{{ find_deb_result.files }}"
-  become: yes
   tags: rebuild
