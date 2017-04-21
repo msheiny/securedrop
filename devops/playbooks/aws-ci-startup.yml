@@ -108,7 +108,7 @@
     ci_box_ip: "{{ lookup('pipe', 'curl -s ifconfig.co') }}"
     aws_ec2_ci_tags:
       job_name: "securedrop-ci"
-      build_num: "{{ ansible_env.TRAVIS_BUILD_NUMBER | mandatory }}"
+      build_num: "{{ ansible_env.CIRCLE_BUILD_NUM | mandatory }}"
     aws_ec2_ci_userdata: |
       #!/bin/bash
       adduser --ingroup sudo --disabled-password --gecos "" {{ ansible_user_id }}

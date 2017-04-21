@@ -62,4 +62,4 @@
     aws_ec2_ci_region: "{{ ansible_env.CI_AWS_REGION | default('us-west-1') }}"
     aws_ec2_ci_tags:
       job_name: "securedrop-ci"
-      build_num: "{{ ansible_env.TRAVIS_BUILD_NUMBER | mandatory }}"
+      build_num: "{{ ansible_env.CIRCLE_BUILD_NUM | mandatory }}"
