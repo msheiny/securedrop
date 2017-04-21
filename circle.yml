@@ -1,4 +1,7 @@
 machine:
+  pre:
+    - echo 'export rvm_install_on_use_flag=0' >> /home/ubuntu/.rvmrc
+
   python:
     version: 2.7.6
 
