@@ -6,6 +6,11 @@ ci-spinup:
 ci-teardown:
 	./devops/scripts/ci-teardown.sh
 
-.PHONY: ci-run
+.PHONY: ci-runner
 ci-run:
 	./devops/scripts/ci-runner.sh
+
+# Run SpinUP, Playbooks, and Testinfra
+.PHONY: ci-go
+ci-go:
+	./devops/scripts/spin-run-test.sh

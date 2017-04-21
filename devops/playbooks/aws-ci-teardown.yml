@@ -27,7 +27,7 @@
 
       - name: delete server-side ssh key
         ec2_key:
-          name: "{{ job_id }}"
+          name: "sdci-{{ job_id }}"
           state: absent
           region: "{{ aws_ec2_ci_region }}"
 

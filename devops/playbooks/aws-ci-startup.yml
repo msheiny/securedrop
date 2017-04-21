@@ -80,6 +80,7 @@
               delete_on_termination: True
           instance_tags: "{{ aws_ec2_ci_tags | combine(item) }}"
           count_tag: "{{ aws_ec2_ci_tags | combine(item) }}"
+          instance_profile_name: securedrop
         register: reg_ec_instance
         with_items: "{{ aws_instance_tags }}"
 
@@ -90,6 +91,7 @@
           timeout: 200
           state: started
         with_items: "{{ reg_ec_instance.results }}"
+        when: "item.tagged_instances[0].tags['build_num'] == aws_ec2_ci_tags.build_num"
 
       - name: Add AWS host(s) to temp ssh config
         template:
@@ -99,7 +101,7 @@
       become_user: "{{ ansible_user_id }}"
       delegate_to: localhost
   vars:
-    aws_ec2_instance_type: "t2.small"
+    aws_ec2_instance_type: "{{ ansible_env.CI_AWS_TYPE | mandatory }}"
     aws_ec2_ci_region: "{{ ansible_env.CI_AWS_REGION | default('us-west-1') }}"
     aws_ec2_vpc_id: "{{ ansible_env.CI_AWS_VPC_ID | mandatory }}"
     ci_environment: "{{ ansible_env.CI_SD_ENV | mandatory }}"
