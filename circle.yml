@@ -1,0 +1,19 @@
+machine:
+  python:
+    version: 2.7.6
+
+  environment:
+    FPF_CI: true
+    CI_SD_ENV: staging
+    CI_AWS_TYPE: t2.small
+
+dependencies:
+  override:
+    - pip install pip-tools
+    - pip-sync testinfra/requirements.txt
+
+test:
+  override:
+    - make ci-go
+  post:
+    - make ci-teardown
