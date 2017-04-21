@@ -107,7 +107,7 @@ testinfra \
         else:
             ssh_config_path = "{}/.ssh/sshconfig-securedrop-ci-{}".format(
                                             os.environ["HOME"],
-                                            os.environ["CIRCLE_BUILD_NUM"])
+                                            os.environ["BUILD_NUM"])
             testinfra_command_template = """
 testinfra \
     -vv \
