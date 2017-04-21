@@ -99,10 +99,27 @@ testinfra \
     {target_roles}
 """.lstrip().rstrip()
 
-    elif os.environ.get("TRAVIS", 'false') == 'true':
-        os.environ['SECUREDROP_TESTINFRA_TARGET_HOST'] = "travis"
-        ssh_config_path = ""
-        testinfra_command_template = "testinfra -vv {target_roles}"
+    elif os.environ.get("FPF_CI", 'false') == 'true':
+        if os.environ.get("CI_SD_ENV","development") == "development":
+            os.environ['SECUREDROP_TESTINFRA_TARGET_HOST'] = "travis"
+            ssh_config_path = ""
+            testinfra_command_template = "testinfra -vv {target_roles}"
+        else:
+            ssh_config_path = "{}/.ssh/sshconfig-securedrop-ci-{}".format(
+                                            os.environ["HOME"],
+                                            os.environ["TRAVIS_BUILD_NUMBER"])
+            testinfra_command_template = """
+testinfra \
+    -vv \
+    -n auto \
+    --connection ssh \
+    --ssh-config \
+    {ssh_config_path}\
+    --junit-xml=./{target_host}.xml\
+    --hosts {target_host} \
+    {target_roles}
+""".lstrip().rstrip()
+
     else:
         ssh_config_path = ""
         testinfra_command_template = """
