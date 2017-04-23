@@ -115,7 +115,8 @@ testinfra \
     --connection ssh \
     --ssh-config \
     {ssh_config_path}\
-    --junit-xml=./{target_host}.xml\
+    --junit-xml=./{target_host}-results.xml\
+    --junit-prefix={target_host}\
     --hosts {target_host} \
     {target_roles}
 """.lstrip().rstrip()
