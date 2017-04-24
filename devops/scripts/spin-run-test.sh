@@ -3,7 +3,11 @@
 #
 #
 
-make ci-spinup && make ci-run
+# Only run test task (usually used in local testing)
+if [ ! "$1" == "only_test" ]; then
+    make ci-spinup && make ci-run
+fi
+
 if [ "$?" == "0" ]; then
     case "$CI_SD_ENV" in
     "staging")

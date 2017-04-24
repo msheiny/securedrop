@@ -14,3 +14,7 @@ ci-run:
 .PHONY: ci-go
 ci-go:
 	./devops/scripts/spin-run-test.sh
+
+.PHONY: ci-test
+ci-test:
+	./devops/scripts/spin-run-test.sh only_test
