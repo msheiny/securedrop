@@ -2,9 +2,6 @@ machine:
   pre:
     - echo 'export rvm_install_on_use_flag=0' >> /home/ubuntu/.rvmrc
 
-  python:
-    version: 2.7.6
-
   environment:
     FPF_CI: true
     CI_SD_ENV: staging
