@@ -18,3 +18,7 @@ ci-go:
 .PHONY: ci-test
 ci-test:
 	./devops/scripts/spin-run-test.sh only_test
+
+.PHONY: ci-debug
+ci-debug:
+	touch ${HOME}/.FPF_CI_DEBUG
