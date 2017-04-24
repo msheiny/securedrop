@@ -8,6 +8,7 @@ if [ ! -d "install_files/ossec-packages/ansible/" ]; then
     git submodule update --init --recursive
 fi
 
+# Set hostnames for CI boxes based on inventory names
 ansible staging -b -m hostname -a "name={{inventory_hostname}}"
 
 # Build OSSEC agent+server packages
@@ -15,3 +16,6 @@ ansible-playbook install_files/ossec-packages/ansible/build-deb-pkgs.yml -e buil
 
 # Build + install OSSEC config packages, install securedrop
 ansible-playbook install_files/ansible-base/securedrop-${CI_SD_ENV}.yml --skip-tags="grsec,local_build" -e primary_network_iface=eth0 -e install_local_packages=true -e ssh_users="$USER"
+
+# Reboot and wait
+./devops/playbooks/reboot_and_wait.yml --diff
