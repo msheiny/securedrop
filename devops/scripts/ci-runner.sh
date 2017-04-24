@@ -8,6 +8,8 @@ if [ ! -d "install_files/ossec-packages/ansible/" ]; then
     git submodule update --init --recursive
 fi
 
+ansible staging -b -m hostname -a "name={{inventory_hostname}}"
+
 # Build OSSEC agent+server packages
 ansible-playbook install_files/ossec-packages/ansible/build-deb-pkgs.yml -e build_path=/tmp/ossec-build -e repo_src_path="/tmp/ossec-src" -e local_build_path="../../../build/"
 
