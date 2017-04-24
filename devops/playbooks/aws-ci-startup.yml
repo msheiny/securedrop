@@ -28,7 +28,7 @@
       - name: Find Ubuntu AMI
         ec2_ami_find:
           owner: 099720109477
-          name: "ubuntu/images*/hvm/ubuntu-trusty-14.04-beta*-amd64-server-*"
+          name: "ubuntu/images/hvm-io1/ubuntu-trusty-14.04-amd64-server*"
           region: "{{ aws_ec2_ci_region }}"
           sort: name
           sort_order: descending
