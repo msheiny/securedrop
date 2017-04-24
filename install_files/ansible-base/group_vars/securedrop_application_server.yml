@@ -42,7 +42,7 @@ securedrop_ossec_agent_deb: "{{ securedrop_repo }}/securedrop-ossec-agent-2.8.2-
 local_deb_packages:
   - "securedrop-ossec-agent-2.8.2+{{ securedrop_app_code_version }}-amd64.deb"
   - "{{ securedrop_app_code_deb }}.deb"
-  - "securedrop-ossec-agent-2.8.2+{{ securedrop_app_code_version }}-amd64.deb"
+  - "ossec-agent-2.8.2-amd64.deb"
   - "securedrop-keyring-0.1.0+{{ securedrop_app_code_version }}-amd64.deb"
 
 ### Used by the app role ###

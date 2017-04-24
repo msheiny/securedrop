@@ -1,0 +1,3 @@
+[submodule "install_files/ossec-packages"]
+	path = install_files/ossec-packages
+	url = https://github.com/freedomofpress/ossec.git
