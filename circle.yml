@@ -9,6 +9,7 @@ machine:
     FPF_CI: true
     CI_SD_ENV: staging
     CI_AWS_TYPE: t2.small
+    FPF_GRSEC: false
 
 dependencies:
   override:
