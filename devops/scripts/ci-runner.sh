@@ -12,4 +12,4 @@ fi
 ansible-playbook install_files/ossec-packages/ansible/build-deb-pkgs.yml -e build_path=/tmp/ossec-build -e repo_src_path="/tmp/ossec-src" -e local_build_path="../../../build/"
 
 # Build + install OSSEC config packages, install securedrop
-ansible-playbook install_files/ansible-base/securedrop-${CI_SD_ENV}.yml --skip-tags="grsec,local_build" -e primary_network_iface=eth0 -e install_local_packages=true
+ansible-playbook install_files/ansible-base/securedrop-${CI_SD_ENV}.yml --skip-tags="grsec,local_build" -e primary_network_iface=eth0 -e install_local_packages=true -e ssh_users="$USER"
