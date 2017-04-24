@@ -111,7 +111,7 @@ testinfra \
             testinfra_command_template = """
 testinfra \
     -vv \
-    -n auto \
+    -n 8 \
     --connection ssh \
     --ssh-config \
     {ssh_config_path}\
