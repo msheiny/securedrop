@@ -129,6 +129,8 @@ def test_grsecurity_paxtest(Command, Sudo, paxtest_check):
 
 
 
+@pytest.mark.skipif(os.environ.get('FPF_CI','false') == "true",
+                    reason="Not needed in CI environment")
 def test_grub_pc_marked_manual(Command):
     """
     Ensure the `grub-pc` packaged is marked as manually installed.
