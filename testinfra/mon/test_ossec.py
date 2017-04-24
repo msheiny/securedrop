@@ -126,8 +126,8 @@ def test_ossec_pubkey_in_keyring(Command, Sudo):
 uid                  Test/Development (DO NOT USE IN PRODUCTION) (Admin's OSSEC Alert GPG key) <securedrop@freedom.press>
 sub   4096R/97D2EB39 2014-10-15"""
     with Sudo("ossec"):
-        c = Command("gpg --homedir /var/ossec/.gnupg --list-keys EDDDC102")
-        assert c.stdout ==  ossec_gpg_pubkey_info
+        c = Command.check_output("gpg --homedir /var/ossec/.gnupg --list-keys EDDDC102")
+        assert c ==  ossec_gpg_pubkey_info
 
 
 # Permissions don't match between Ansible and OSSEC deb packages postinst.

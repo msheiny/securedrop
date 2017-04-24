@@ -20,9 +20,10 @@ def test_app_iptables_rules(SystemInfo, Command, Sudo):
 
     # Build iptables scrape cmd, purge comments + counters
     iptables = "iptables-save | sed 's/ \[[0-9]*\:[0-9]*\]//g' | egrep -v '^#'"
-    iptables_file = "{}/iptables-{}.j2".format(
+    environment = os.environ.get("CI_SD_ENV")
+    iptables_file = "{}/iptables-app-{}.j2".format(
                                       os.path.dirname(os.path.abspath(__file__)),
-                                      SystemInfo.hostname)
+                                      environment)
 
     # template out a local iptables jinja file
     jinja_iptables = Template(open(iptables_file,'r').read())
