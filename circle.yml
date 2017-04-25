@@ -1,0 +1,21 @@
+machine:
+  pre:
+    - echo 'export rvm_install_on_use_flag=0' >> /home/ubuntu/.rvmrc
+
+  environment:
+    FPF_CI: true
+    CI_SD_ENV: staging
+    CI_AWS_TYPE: t2.small
+    FPF_GRSEC: false
+
+dependencies:
+  override:
+    - pip install -U pip
+    - pip install pip-tools
+    - pip-sync testinfra/requirements.txt
+
+test:
+  override:
+    - make ci-go
+  post:
+    - make ci-teardown
