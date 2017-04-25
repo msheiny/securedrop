@@ -228,7 +228,7 @@ def test_hosts_files(File, SystemInfo):
     app_host = securedrop_test_vars.app_hostname
 
     assert f.contains('^127.0.0.1.*localhost')
-    assert f.contains('^{}\s*app-{}$'.format(app_ip, app_host))
+    assert f.contains('^{}\s*{}$'.format(app_ip, app_host))
 
 
 def test_ossec_log_contains_no_malformed_events(File, Sudo):
