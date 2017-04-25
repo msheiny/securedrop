@@ -4,6 +4,12 @@
 #
 . devops/ansible_env
 
+
+# Only run test task (usually used in local testing)
+if [ ! "$1" == "only_test" ]; then
+    make ci-spinup && make ci-run
+fi
+
 # Quick hack to pass IPs off to testinfra
 for host in app mon; do
     # tacking xargs at the end strips the trailing space
@@ -11,11 +17,6 @@ for host in app mon; do
     ansible -c local localhost -m lineinfile -a "dest=./testinfra/vars/app-${CI_SD_ENV}.yml line='${host}_ip: $ip' regexp='^${host}_ip'"
     ansible -c local localhost -m lineinfile -a "dest=./testinfra/vars/mon-${CI_SD_ENV}.yml line='${host}_ip: $ip' regexp='^${host}_ip'"
 done
-
-# Only run test task (usually used in local testing)
-if [ ! "$1" == "only_test" ]; then
-    make ci-spinup && make ci-run
-fi
 
 if [ "$?" == "0" ]; then
     case "$CI_SD_ENV" in
