@@ -7,7 +7,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  sudo: no
+  become: no
   tasks:
     - name: Check for "build" machine in inventory.
       fail:
@@ -18,7 +18,9 @@
           `ANSIBLE_ARGS="--tags rebuild" vagrant provision /staging/` to rebuild
           and reinstall the application code.
       when: "'build' not in groups.all"
-  tags: rebuild
+  tags:
+    - rebuild
+    - local_build
 
 # All plays in this playbook target the build host, but most be invoked separately,
 # since we're using wrapper roles for the build. If you add multiple child roles with
@@ -26,6 +28,7 @@
 # last wrapper role will run. This is a known bug and will be fixed in v2.0.
 - name: Build SecureDrop application Debian package from local repository.
   hosts: build
+  become: yes
   vars_files:
     # The order of these files files is important, since each successive
     # include overrides vars in the previous files. Ordinarily we'd
@@ -35,6 +38,23 @@
     - group_vars/securedrop_application_server.yml
     - group_vars/development.yml
   pre_tasks:
+    - set_fact:
+        amazon_builder: "{{ true if 'amazon' in ansible_product_version else false }}"
+
+    - name: Copy over current source folder to builder
+      synchronize:
+        src: ../../../
+        dest: "{{ securedrop_repo }}"
+        delete: yes
+        use_ssh_args: yes
+        recursive: yes
+        rsync_opts:
+          - "--exclude=*.git"
+          - "--exclude=*.deb"
+          - "--exclude=*app-*-*ths"
+          - "--exclude=*mon-ssh-*ths"
+      when: amazon_builder
+
     - name: Ensure all packages are up to date.
       apt:
         upgrade: dist
@@ -54,5 +74,22 @@
     - { role: build-generic-pkg, tags: ["securedrop-ossec-server"], package_name: "securedrop-ossec-server" }
     - { role: build-generic-pkg, tags: ["securedrop-ossec-agent"], package_name: "securedrop-ossec-agent" }
     - { role: build-generic-pkg, tags: ["securedrop-keyring"], package_name: "securedrop-keyring" }
-  sudo: yes
+
+  post_tasks:
+    - name: Track down built debian packages
+      find:
+        paths: "{{ securedrop_repo }}/build/"
+        patterns: "*deb"
+      changed_when: false
+      when: amazon_builder
+      register: find_deb_result
+
+    - name: Fetch back built deb packages
+      fetch:
+        src: "{{ item.path }}"
+        dest: "../../build/"
+        delete: yes
+        flat: yes
+      when: amazon_builder
+      with_items: "{{ find_deb_result.files }}"
   tags: rebuild
