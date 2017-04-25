@@ -1,8 +1,6 @@
 #!/bin/bash
 
-export RETRY_FILES_ENABLED="False"
-export ANSIBLE_INVENTORY="./devops/inventory/$CI_SD_ENV"
-export ANSIBLE_SSH_ARGS="-F $HOME/.ssh/sshconfig-securedrop-ci-$BUILD_NUM -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+. devops/ansible_env
 
 if [ ! -d "install_files/ossec-packages/ansible/" ]; then
     git submodule update --init --recursive

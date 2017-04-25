@@ -2,6 +2,7 @@
 #
 #
 #
+. devops/ansible_env
 
 # Only run test task (usually used in local testing)
 if [ ! "$1" == "only_test" ]; then
