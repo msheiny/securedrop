@@ -90,9 +90,8 @@ def test_ossec_connectivity(Command, Sudo):
     desired_output = "{}-{} is available.".format(securedrop_test_vars.app_hostname,
             securedrop_test_vars.app_ip)
     with Sudo():
-        c = Command("/var/ossec/bin/list_agents -a")
-        assert c.stdout == desired_output
-        assert c.rc == 0
+        c = Command.check_output("/var/ossec/bin/list_agents -a")
+        assert c == desired_output
 
 def test_ossec_gnupg(File, Sudo):
     """ ensure ossec gpg homedir exists """
